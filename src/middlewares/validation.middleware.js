@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import {ADMIN, MODERATOR, USER} from "../configuration/constants.js";
 
 // TODO Add to schemas validation to user account
 const schemas = {
@@ -18,6 +19,24 @@ const schemas = {
     dateFormatPeriod: Joi.object({
         dateFrom: Joi.date().iso().required(),
         dateTo: Joi.date().iso().required().greater(Joi.ref('dateFrom'))
+    }),
+    userRegister: Joi.object({
+            login: Joi.string().required(),
+            password: Joi.string().required(),
+            firstName: Joi.string().required(),
+            lastName: Joi.string().required(),
+        }
+    ),
+    userUpdate: Joi.object({
+        firstName: Joi.string(),
+        lastName: Joi.string(),
+    }).min(1),
+    userUpdateRole: Joi.object({
+        login: Joi.string().required(),
+        role: Joi.string().valid(ADMIN, MODERATOR, USER).insensitive().required()
+    }),
+    userUpdatePassword: Joi.object({
+        password: Joi.string().required()
     })
 }
 
