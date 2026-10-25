@@ -10,6 +10,16 @@ const errorHandler = (err, req, res, next) => {
         });
     }
 
+    if (err.message?.toLowerCase().includes('already exist')) {
+        return res.status(409).json({
+            "timestamp": new Date().toISOString(),
+            "status": 409,
+            "error": "Conflict",
+            "message": err.message,
+            "path": req.path
+        });
+    }
+
     return res.status(500).json({
         "timestamp": new Date().toISOString(),
         "status": 500,

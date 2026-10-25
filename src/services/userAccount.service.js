@@ -1,17 +1,35 @@
+import * as userAccountRepository from "../repository/userAccount.repository.js";
+
 export const register = async (user) => {
-    // TODO: Implement user registration logic
+    try {
+        return await userAccountRepository.register(user);
+    } catch (error) {
+        throw new Error(`Failed to register. User with login ${user.login} already exists`);
+    }
 }
 
 export const removeUser = async (login) => {
-    // TODO: Implement user removal logic
+    const result = await userAccountRepository.removeUser(login);
+    if (!result) {
+        throw new Error(`User with login ${login} not found`);
+    }
+    return result;
 }
 
 export const updateUser = async (login, updateData) => {
-    // TODO: Implement user update logic
+    const result = await userAccountRepository.updateUser(login, updateData);
+    if (!result) {
+        throw new Error(`User with login ${login} not found`);
+    }
+    return result;
 }
 
 export const changeRoles = async (login, role, isAddRole) => {
-    // TODO: Implement user role change logic
+    const result = isAddRole ? await userAccountRepository.addRole(login, role) : await userAccountRepository.removeRole(login, role);
+    if (!result) {
+        throw new Error(`User with login ${login} not found`);
+    }
+    return result;
 }
 
 export const changePassword = async (login, newPassword) => {
@@ -19,5 +37,9 @@ export const changePassword = async (login, newPassword) => {
 }
 
 export const getUser = async (login) => {
-    // TODO: Implement user retrieval logic
+    const user = await userAccountRepository.getUser(login);
+    if (!user) {
+        throw new Error(`User with login ${login} not found`);
+    }
+    return user;
 }
