@@ -25,6 +25,7 @@ export const updateUser = async (login, updateData) => {
 }
 
 export const changeRoles = async (login, role, isAddRole) => {
+    role = role.toUpperCase();
     const result = isAddRole ? await userAccountRepository.addRole(login, role) : await userAccountRepository.removeRole(login, role);
     if (!result) {
         throw new Error(`User with login ${login} not found`);

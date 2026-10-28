@@ -25,7 +25,7 @@ const userAccountSchema = new Schema({
         type: [{
             type: String,
             enum: [ADMIN, MODERATOR, USER],
-            lowercase: true
+            uppercase: true
         }],
         default: [USER]
     }
