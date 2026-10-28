@@ -12,3 +12,5 @@ export const addRole = async (login, role) => await UserAccount.findOneAndUpdate
 
 export const removeRole = async (login, role) => await UserAccount.findOneAndUpdate({'_id': login }, { $pull: { roles: role } }, {returnDocument: 'after', projection: { roles: 1 }});
 
+export const changePassword = async (login, newPassword) => await UserAccount.findOneAndUpdate({'_id': login }, { password: newPassword });
+

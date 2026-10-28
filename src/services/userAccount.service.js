@@ -1,7 +1,10 @@
 import * as userAccountRepository from "../repository/userAccount.repository.js";
+import bcrypt from "bcrypt";
 
 export const register = async (user) => {
     try {
+        const salt = await bcrypt.genSalt(12);
+        user.password = await bcrypt.hash(user.password, salt);
         return await userAccountRepository.register(user);
     } catch (error) {
         throw new Error(`Failed to register. User with login ${user.login} already exists`);
@@ -34,7 +37,13 @@ export const changeRoles = async (login, role, isAddRole) => {
 }
 
 export const changePassword = async (login, newPassword) => {
-    // TODO: Implement user password change logic
+    const salt = await bcrypt.genSalt(12);
+    newPassword = await bcrypt.hash(newPassword, salt);
+    const result = await userAccountRepository.changePassword(login, newPassword);
+    if (!result) {
+        throw new Error(`User with login ${login} not found`);
+    }
+    return result;
 }
 
 export const getUser = async (login) => {
