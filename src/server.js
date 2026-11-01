@@ -16,8 +16,7 @@ app.use(express.json());
 app.use(authentication)
 
 const authorizationRouter = Router();
-authorizationRouter.patch('/account/user/:login/role/:role', hasRole(ADMIN));
-authorizationRouter.delete('/account/user/:login/role/:role', hasRole(ADMIN))
+authorizationRouter.all('/account/user/:login/role/:role', hasRole(ADMIN));
 app.use(authorizationRouter)
 
 
