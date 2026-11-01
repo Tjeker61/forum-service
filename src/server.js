@@ -4,10 +4,13 @@ import userRoutes from "./routes/userAccount.routes.js";
 import mongoose from "mongoose";
 import config from "./configuration/config.js";
 import errorHandler from "./middlewares/error.middleware.js";
+import authentication from "./middlewares/authentication.middleware.js";
 
 const app = express();
 
 app.use(express.json());
+
+app.use(authentication)
 
 app.use('/forum', postRoutes);
 app.use('/account', userRoutes);
