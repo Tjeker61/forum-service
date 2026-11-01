@@ -2,7 +2,7 @@ import UserAccount from '../models/userAccount.model.js';
 import bcrypt from "bcrypt";
 
 const authentication = async (req, res, next) => {
-    if (req.path != '/account/register' ) {
+    if (req.path != '/account/register' && !req.path.startsWith('/forum/posts') ) {
         let token = req.headers.authorization
         if (!token || !token.startsWith('Basic '))
             return res.status(401).json({message: 'Authentification token is missing'});

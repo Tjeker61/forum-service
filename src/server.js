@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import config from "./configuration/config.js";
 import errorHandler from "./middlewares/error.middleware.js";
 import authentication from "./middlewares/authentication.middleware.js";
+import { createAdmin } from "./configuration/initAdmin.js";
 
 const app = express();
 
@@ -30,6 +31,7 @@ const connectDB = async () => {
 
 async function startServer() {
     await connectDB();
+    await createAdmin();
     app.listen(config.port, () => console.log(`Server running on port ${config.port}. Press Ctrl+C to stop.`));
 }
 
